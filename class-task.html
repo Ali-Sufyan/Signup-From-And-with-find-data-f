@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+           margin: 0x;
+           padding: 0px;
+        
+        }
+        fieldset
+        {
+            height: 93%;
+            width:91%;
+            /* background-color: grey; */
+        }
+        form 
+        {
+            width:40%;
+            position: relative;
+            margin-top: 50px;;
+            /* height: 60vh; */
+            margin:100px auto;
+            box-shadow: 0px 2px 4px 4px gray,
+            -2px -0px 4px 4px #243665;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+        
+
+        }
+        h1 
+        {
+            text-align: center;
+        }
+        legend
+        {
+            font-size: 30px;
+            color:blueviolet;
+            text-align:left;
+        
+        }
+        input
+        {
+            height: 10px;
+            border: none;
+            outline: none;
+            padding: 15px;
+            width: 200px;
+            text-shadow: 1px 1px 0px#243665;
+            border-radius: 80px;
+            font-size: 20px;
+            box-shadow: 1px 1px 1px 1px #243665,
+ inset 2px 2px 5px #babacc,
+ inset -5px -5px 2px #ffffff;
+ 
+        }
+        label 
+        {
+            font-size: 30px;
+            /* font-weight: bold; */
+        }
+        .inp1
+        {
+            /* box-shadow: none !important; */
+            /* display: none !important; */
+            padding:10px;
+            width:100px;
+            height: 40px;
+            /* display: block; */
+        }
+        button
+        {
+            background: transparent;
+            height: 40px;
+            width: 100px;;
+            margin-left: 20px;
+            /* display: block; */
+        }
+        #form 
+        {
+            height: auto;
+        }
+        @media screen and (max-width: 800px) {
+ div{
+    display: flex;
+    flex-direction: column-reverse;
+ }
+ form{
+    width: 80%;
+    margin: 20px auto;
+ }
+}
+   
+    </style>
+</head>
+<body>
+<div style="display: flex;flex-wrap:wrap">
+<form action="/action_page.php">
+ <fieldset>
+  <legend>Submit Form</legend>
+  <label for="fname" >First name:</label>
+  <input type="text" id="fname" name="fname" placeholder="Enter First name" required><br><br>
+  <label for="lname">Last name:</label>
+  <input type="text" id="lname" name="lname" placeholder="Enter Last name" required><br><br>
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" placeholder="Enter your email" required><br><br>
+  <label for="birthday">Birthday:</label>
+  <input type="date" id="birthday" name="birthday" required><br><br>
+  <input type="button" value="Submit" class="inp1">
+ </fieldset>
+</form>
+<form action="" id="form" style="margin-left:40px">
+    <input type="search" id="search" placeholder=" name to search">
+    <button type="button">Search</button>
+</form>
+</div>
+<script>
+
+var input=document.querySelectorAll("input")
+var btn=document.getElementsByClassName("inp1")[0]
+
+btn.onclick=()=>
+{
+    var name=input[0].value
+    var lname=input[1].value
+    var email=input[2].value
+    var dob=input[3].value
+    var obj={name,lname,email,dob}
+    var arr=JSON.parse(localStorage.getItem("data"))
+    if(arr)
+    {
+       arr.push(obj)
+       localStorage.setItem("data",JSON.stringify(arr))
+
+    }
+    else
+    {
+localStorage.setItem("data",JSON.stringify([obj]))
+    }
+    input[0].value=""
+    input[1].value=""
+    input[2].value=""
+    input[3].value=""
+
+}
+
+    var search=document.getElementById("search")
+    var button=document.getElementsByTagName("button")[0]
+    var show=document.createElement("div")
+    var form2=document.getElementsByTagName("form")[1]
+    form2.appendChild(show)
+    // show.style.border="2px solid red"
+    show.style.height="auto"
+    show.style.width="100%"
+  
+var z
+    button.onclick=()=>
+    {
+     var x=JSON.parse(localStorage.getItem("data"))
+      var compare=search.value
+        z=x.filter((e)=>
+         {
+            //  console.log(e.name);
+           return e.name==compare   
+
+
+         })
+         if(z.length)
+         {
+         z.forEach((d)=>
+         {
+            show.innerHTML+=`<h1>Your name is ${d.name}</h1>
+         <h1>Your last name is ${d.lname}</h1>
+         <h1>Your Email is ${d.email}</h1>
+         <h1>Your DOB ${d.dob}</h1>`
+         })
+         search.value=""
+        }
+        else if(z==0)
+        {
+            show.innerHTML+=`<h1>record not found</h1>` 
+        }
+         
+
+         
+
+        
+
+    }
+    
+
+
+</script>
+
+
+</body>
+</html>
